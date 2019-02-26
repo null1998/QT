@@ -21,6 +21,8 @@ public:
     Circular startCircular;
     Circular endCircular;
     int length;
+    Line(){}
+    ~Line(){}
 };
 class Dialog : public QDialog
 {
@@ -33,17 +35,25 @@ public:
     QPoint startPoint;
     QPoint endPoint;
     QPoint CPoint;
+    QPoint WPoint;
+    int ww;
     QPixmap pix;
     QPixmap tempPix;
     QPainter *paint;
     bool isDoubleClick;
     bool isDrawLine;
+    bool isNum;
     std::vector<Circular> cset;
     std::vector<Line> lset;
     void paintEvent(QPaintEvent*);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::Dialog *ui;

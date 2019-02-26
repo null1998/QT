@@ -54,6 +54,30 @@ std::vector<Line> f(int count,std::vector<Line> lset){
        return lresult;
 }
 
+Line initLine(std::vector<Circular> cset,QPoint startPoint,QPoint endPoint){
+    Line l;
+    Circular markC;
+    for(int i=0;i<cset.size();i++){
+        Circular c=cset.at(i);
+        if((c.point.x()-startPoint.x()<40&&c.point.x()-startPoint.x()>-40)&&(c.point.y()-startPoint.y()<40&&c.point.y()-startPoint.y()>-40)){
+            l.startCircular=c;
+            markC=c;
+            cset.erase(cset.begin()+i);
+            for(int j=0;j<cset.size();j++){
+                Circular c2=cset.at(j);
+                if((c2.point.x()-endPoint.x()<40&&c2.point.x()-endPoint.x()>-40)&&(c2.point.y()-endPoint.y()<40&&c2.point.y()-endPoint.y()>-40)){
+                    l.endCircular=c2;
+                    cset.push_back(markC);
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    return l;
+}
+
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -64,8 +88,9 @@ Dialog::Dialog(QWidget *parent) :
     pix.fill(Qt::white);
     isDoubleClick=false;
     isDrawLine=false;
+    isNum=false;
     count=0;
-
+    ww=0;
 }
 
 Dialog::~Dialog()
@@ -77,25 +102,28 @@ void Dialog::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QPainter paint(&pix);
-    if(isDrawLine){
-        paint.drawLine(startPoint,endPoint);
 
-        isDrawLine=false;
+    if(isNum){
+       paint.drawText(WPoint.x(),WPoint.y(),QString::fromStdString(std::to_string(ww)));
+       isNum=false;
     }
 
+    if(isDrawLine){
+        paint.drawLine(startPoint,endPoint);
+        Line l=initLine(cset,startPoint,endPoint);
+        lset.push_back(l);
+        isDrawLine=false;
+    }
 
     if(isDoubleClick){
         count++;
         Circular c;
         c.initCircular(CPoint,count);
         cset.push_back(c);
-
         paint.drawText(CPoint.x(),CPoint.y(),QString::fromStdString(std::to_string(count)));
         CPoint.setX(CPoint.x()-25);
         CPoint.setY(CPoint.y()-25);
         paint.drawEllipse(CPoint.x(),CPoint.y(),50,50);
-
-
         isDoubleClick=false;
     }
     painter.drawPixmap(0,0,pix);
@@ -121,4 +149,34 @@ void Dialog::mouseDoubleClickEvent(QMouseEvent *event){
         isDoubleClick=true;
         update();
     }
+}
+
+void Dialog::on_pushButton_clicked()
+{
+    QString s1=ui->lineEdit->displayText();
+    QString s2=ui->lineEdit_2->displayText();
+    QString s3=ui->lineEdit_3->displayText();
+    int s=s1.toInt();
+    int e=s2.toInt();
+    int w=s3.toInt();
+    for(int i=0;i<lset.size();i++){
+        Line l=lset.at(i);
+        if((l.startCircular.num==s&&l.endCircular.num==e)||(l.startCircular.num==e&&l.endCircular.num==s)){
+            lset.erase(lset.begin()+i);
+            l.length=w;
+            lset.push_back(l);
+            ww=w;
+            WPoint.setX((l.startCircular.point.x()+l.endCircular.point.x())/2);
+            WPoint.setY((l.startCircular.point.y()+l.endCircular.point.y())/2);
+            isNum=true;
+            update();
+        }
+    }
+
+
+}
+
+void Dialog::on_pushButton_2_clicked()
+{
+
 }
