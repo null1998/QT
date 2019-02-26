@@ -25,8 +25,8 @@ std::vector<Line> f(int count,std::vector<Line> lset){
     }
     for(int i=0;i<lset.size();i++){
         Line l=lset.at(i);
-        graph[l.startCircular.num][l.endCircular.num]=l.length;
-        graph[l.endCircular.num][l.startCircular.num]=l.length;
+        graph[l.startCircular.num-1][l.endCircular.num-1]=l.length;
+        graph[l.endCircular.num-1][l.startCircular.num-1]=l.length;
     }
     while(!lset.empty()){
         int min=NUM_MAX;
@@ -40,11 +40,11 @@ std::vector<Line> f(int count,std::vector<Line> lset){
            }
         }
         Line min_l = lset.at(index);
-        if (identify[min_l.startCircular.num] != identify[min_l.endCircular.num]) {
-           int mark = identify[min_l.endCircular.num];
+        if (identify[min_l.startCircular.num-1] != identify[min_l.endCircular.num-1]) {
+           int mark = identify[min_l.endCircular.num-1];
            for (int i = 0; i < count; i++) {
                if (identify[i] == mark) {
-                    identify[i] = identify[min_l.startCircular.num];
+                    identify[i] = identify[min_l.startCircular.num-1];
                }
            }
                     lresult.push_back(min_l);
@@ -89,6 +89,7 @@ Dialog::Dialog(QWidget *parent) :
     isDoubleClick=false;
     isDrawLine=false;
     isNum=false;
+    isSuccess=false;
     count=0;
     ww=0;
 }
@@ -102,7 +103,9 @@ void Dialog::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     QPainter paint(&pix);
+    if(isSuccess){
 
+    }
     if(isNum){
        paint.drawText(WPoint.x(),WPoint.y(),QString::fromStdString(std::to_string(ww)));
        isNum=false;
@@ -178,5 +181,7 @@ void Dialog::on_pushButton_clicked()
 
 void Dialog::on_pushButton_2_clicked()
 {
-
+    successLset=f(count,lset);
+    isSuccess=true;
+    update();
 }

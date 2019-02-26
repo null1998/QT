@@ -43,8 +43,10 @@ public:
     bool isDoubleClick;
     bool isDrawLine;
     bool isNum;
+    bool isSuccess;
     std::vector<Circular> cset;
     std::vector<Line> lset;
+    std::vector<Line> successLset;
     void paintEvent(QPaintEvent*);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
