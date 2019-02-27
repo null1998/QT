@@ -38,7 +38,6 @@ public:
     QPoint WPoint;
     int ww;
     QPixmap pix;
-    QPixmap tempPix;
     QPainter *paint;
     bool isDoubleClick;
     bool isDrawLine;
@@ -51,6 +50,7 @@ public:
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
+    void clear();
 
 private slots:
     void on_pushButton_clicked();

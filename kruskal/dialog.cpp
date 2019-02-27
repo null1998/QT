@@ -104,7 +104,25 @@ void Dialog::paintEvent(QPaintEvent*)
     QPainter painter(this);
     QPainter paint(&pix);
     if(isSuccess){
+        for(int i=0;i<cset.size();i++){
+            Circular c=cset.at(i);
+            paint.drawText(c.point.x(),c.point.y(),QString::fromStdString(std::to_string(c.num)));
+            c.point.setX(c.point.x()-25);
+            c.point.setY(c.point.y()-25);
+            paint.drawEllipse(c.point.x(),c.point.y(),50,50);
+        }
+        for(int i=0;i<successLset.size();i++){
+            Line l=successLset.at(i);
+            QPoint s=l.startCircular.point;
+            QPoint e=l.endCircular.point;
+            paint.drawLine(s,e);
+            QPoint w;
+            w.setX((s.x()+e.x())/2);
+            w.setY((s.y()+e.y())/2);
+            paint.drawText(w.x(),w.y(),QString::fromStdString(std::to_string(l.length)));
 
+        }
+        isSuccess=false;
     }
     if(isNum){
        paint.drawText(WPoint.x(),WPoint.y(),QString::fromStdString(std::to_string(ww)));
@@ -183,5 +201,11 @@ void Dialog::on_pushButton_2_clicked()
 {
     successLset=f(count,lset);
     isSuccess=true;
+    clear();
+}
+void Dialog::clear(){
+    QPixmap newpix=QPixmap(600,600);
+    newpix.fill(Qt::white);
+    pix=newpix;
     update();
 }
