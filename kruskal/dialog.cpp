@@ -13,21 +13,21 @@ std::vector<Line> f(int count,std::vector<Line> lset){
     int graph[COUNT_MAX][COUNT_MAX];
     int identify[COUNT_MAX];
     std::vector<Line> lresult;
-    for (int i = 0; i <count; i++)
-    {
-        for (int j = 0; j < count; j++) {
-            graph[i][j] = NUM_MAX;
-        }
-    }
+//    for (int i = 0; i <count; i++)
+//    {
+//        for (int j = 0; j < count; j++) {
+//            graph[i][j] = NUM_MAX;
+//        }
+//    }
     for (int i = 0; i < count; i++)
     {
             identify[i] = i;
     }
-    for(int i=0;i<lset.size();i++){
-        Line l=lset.at(i);
-        graph[l.startCircular.num-1][l.endCircular.num-1]=l.length;
-        graph[l.endCircular.num-1][l.startCircular.num-1]=l.length;
-    }
+//    for(int i=0;i<lset.size();i++){
+//        Line l=lset.at(i);
+//        graph[l.startCircular.num-1][l.endCircular.num-1]=l.length;
+//        graph[l.endCircular.num-1][l.startCircular.num-1]=l.length;
+//    }
     while(!lset.empty()){
         int min=NUM_MAX;
         int index=-1;
