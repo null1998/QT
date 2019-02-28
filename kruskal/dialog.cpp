@@ -9,7 +9,7 @@
 
 const int COUNT_MAX =100 ;
 const int NUM_MAX = 1000;
-std::vector<Line> f(int count,std::vector<Line> lset){
+std::vector<Line> Dialog::f(int count,std::vector<Line> lset){
     int identify[COUNT_MAX];
     std::vector<Line> lresult;
     for (int i = 0; i < count; i++)
@@ -36,11 +36,27 @@ std::vector<Line> f(int count,std::vector<Line> lset){
                }
            }
                     lresult.push_back(min_l);
+                    v1.push_back(lresult);
         }
         lset.erase(lset.begin() + index);
     }
        return lresult;
 }
+//std::vector<Line> deleteLine(std::vector<Line> lset,std::vector<Line> successLset){
+//    for(int i=0;i<successLset.size();i++){
+//        Line l=successLset.at(i);
+//        for(int j=0;j<lset.size();j++){
+//            Line l2=lset.at(j);
+//            if(l.length==l2.length&&!(l.startCircular.num==l2.startCircular.num&&l.endCircular.num==l2.endCircular.num)){
+//                lset.erase(lset.begin()+j);
+//                return lset;
+//            }
+//        }
+//    }
+//}
+//bool isNext(){
+
+//}
 
 Line initLine(std::vector<Circular> cset,QPoint startPoint,QPoint endPoint){
     Line l;
@@ -85,6 +101,7 @@ Dialog::Dialog(QWidget *parent) :
 Dialog::~Dialog()
 {
     delete ui;
+
 }
 
 void Dialog::paintEvent(QPaintEvent*)
@@ -187,13 +204,41 @@ void Dialog::on_pushButton_clicked()
 
 void Dialog::on_pushButton_2_clicked()
 {
-    successLset=f(count,lset);
+
+
+    f(count,lset);
+    if(!v1.empty()){
+    successLset=v1.at(0);
+    v1.erase(v1.begin()+0);
     isSuccess=true;
     clear();
+    }
 }
 void Dialog::clear(){
     QPixmap newpix=QPixmap(600,600);
     newpix.fill(Qt::white);
     pix=newpix;
     update();
+}
+
+void Dialog::on_pushButton_3_clicked()
+{
+    //下一个
+    if(!v1.empty()){
+    successLset=v1.at(0);
+    v1.erase(v1.begin()+0);
+    isSuccess=true;
+    clear();
+    }
+
+}
+
+void Dialog::on_pushButton_4_clicked()
+{
+    count=0;
+    cset.clear();
+    lset.clear();
+    v1.clear();
+    clear();
+
 }

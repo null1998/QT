@@ -46,16 +46,22 @@ public:
     std::vector<Circular> cset;
     std::vector<Line> lset;
     std::vector<Line> successLset;
+    std::vector<std::vector<Line>> v1;
     void paintEvent(QPaintEvent*);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
+    std::vector<Line> f(int count,std::vector<Line> lset);
     void clear();
 
 private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
 
 private:
     Ui::Dialog *ui;
