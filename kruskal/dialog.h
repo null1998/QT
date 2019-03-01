@@ -43,15 +43,15 @@ public:
     bool isDrawLine;
     bool isNum;
     bool isSuccess;
-    std::vector<Circular> cset;
-    std::vector<Line> lset;
-    std::vector<Line> successLset;
-    std::vector<std::vector<Line>> v1;
+    std::vector<Circular> cset;//已存在的顶点的集合
+    std::vector<Line> lset;//已存在的边的集合
+    std::vector<Line> successLset;//已通过验证的边的集合
+    std::vector<std::vector<Line>> v1;//每一步生成的successLset集合的集合，主要为了分步显示过程
     void paintEvent(QPaintEvent*);
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
-    std::vector<Line> f(int count,std::vector<Line> lset);
+    void kruskal();
     void clear();
 
 private slots:

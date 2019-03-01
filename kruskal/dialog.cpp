@@ -9,7 +9,7 @@
 
 const int COUNT_MAX =100 ;
 const int NUM_MAX = 1000;
-std::vector<Line> Dialog::f(int count,std::vector<Line> lset){
+void Dialog::kruskal(){
     int identify[COUNT_MAX];
     std::vector<Line> lresult;
     for (int i = 0; i < count; i++)
@@ -40,7 +40,7 @@ std::vector<Line> Dialog::f(int count,std::vector<Line> lset){
         }
         lset.erase(lset.begin() + index);
     }
-       return lresult;
+
 }
 //std::vector<Line> deleteLine(std::vector<Line> lset,std::vector<Line> successLset){
 //    for(int i=0;i<successLset.size();i++){
@@ -206,7 +206,7 @@ void Dialog::on_pushButton_2_clicked()
 {
 
 
-    f(count,lset);
+    kruskal();
     if(!v1.empty()){
     successLset=v1.at(0);
     v1.erase(v1.begin()+0);
