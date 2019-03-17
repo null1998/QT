@@ -153,7 +153,6 @@ void Dialog::paintEvent(QPaintEvent*)
         isDoubleClick=false;
     }
     painter.drawPixmap(0,0,pix);
-
 }
 
 void Dialog::mousePressEvent(QMouseEvent *event){
